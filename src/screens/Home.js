@@ -12,9 +12,9 @@ export default class Home extends Component {
     }
     componentDidMount(){
         db.collection('posts').orderBy("createdAt", "desc").onSnapshot(
-            docs => {
-                let postsAux = [] //Variable auxiliar
-                docs.forEach( doc => {
+            docs=> {
+                let postsAux= []
+                docs.forEach(doc=> {
                     postsAux.push({
                         id: doc.id,
                         data: doc.data()
@@ -26,19 +26,20 @@ export default class Home extends Component {
             }
         )
     }
+
     render(){
         console.log(this.state.posts);
         return(
-            <View style = {styles.container}>
+            <View style= {styles.container}>
                 <Text> Home </Text>
-                <TouchableOpacity style = {styles.button} onPress={() => this.props.handleLogout()}>
-                    <Text style = {styles.text}> Logout </Text>
+                <TouchableOpacity style= {styles.button} onPress={()=> this.props.handleLogout()}>
+                    <Text style= {styles.text}> Logout </Text>
                 </TouchableOpacity>
                 <FlatList
-                data = {this.state.posts}
-                keyExtractor = {post => post.id.toString()}
-                renderItem = { ({item}) => 
-                    <Post item = {item}></Post> }
+                data= {this.state.posts}
+                keyExtractor= {post=> post.id.toString()}
+                renderItem= {({item})=> 
+                    <Post dataItem= {item}></Post> }
                 />
             </View>
         )
@@ -52,17 +53,19 @@ const styles = StyleSheet.create({
     },
     field: {
         width: '80%',
-        backgroundColor: "#09009B",
-        color: '#FFA400',
+        backgroundColor: 'white',
+        color: 'black',
         padding: 10,
         marginVertical: 10
     },
     button: {
-        width: '30%',
-        backgroundColor: "#0F00FF",
+        width: '40%',
+        backgroundColor: 'salmon',
+        textAlign: 'center',
+        padding: 10,
     },
     text: {
-        color: '#FFA400',
-        fontSize: 20
+        color: 'white',
+        fontSize: 15
     }
 })

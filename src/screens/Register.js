@@ -3,12 +3,12 @@ import { Text, TextInput, TouchableOpacity, View, StyleSheet} from 'react-native
 import { auth } from '../firebase/config';
 
 export default class Register extends Component {
-    constructor(props) {
+    constructor(props){
         super(props);
-        this.state = {
-            email: "",
-            password: "",
-            username: ""
+        this.state= {
+            email: '',
+            password: '',
+            username: ''
         }
     }
 
@@ -21,39 +21,38 @@ export default class Register extends Component {
         }
     }
 
-    render() {
+    render(){
         return (
-            <View style={styles.container}>
-                <Text style={styles.text}>Registro</Text>
+            <View style= {styles.container}>
+                <Text style= {styles.text}> Registro </Text>
                 <TextInput
-                    style={styles.field}
-                    keyboardType="default"
-                    placeholder="Username"
-                    
+                    style= {styles.field}
+                    keyboardType= 'default'
+                    placeholder= 'Username'
                     onChangeText={text => this.setState({ username: text })}
                 />
                 <TextInput
-                    style={styles.field}
-                    keyboardType="email-address"
-                    placeholder="E-Mail"
-                    onChangeText={text => this.setState({ email: text })}
+                    style= {styles.field}
+                    keyboardType= 'email-address'
+                    placeholder= 'E-Mail'
+                    onChangeText= {text=> this.setState({ email: text })}
                 />
                 <TextInput
-                    style={styles.field}
+                    style= {styles.field}
                     keyboardType='default'
-                    placeholder="Password"
-                    secureTextEntry={true}
-                    onChangeText={text => this.setState({ password: text })}
+                    placeholder= 'Password'
+                    secureTextEntry= {true}
+                    onChangeText= {text=> this.setState({ password: text })}
                 />
-                <TouchableOpacity style = {styles.button} onPress={() => this.handleRegister()}>
-                    <Text style = {styles.text}> Sign Up </Text>
+                <TouchableOpacity style= {styles.button} onPress={()=> this.handleRegister()}>
+                    <Text style= {styles.text}> Sign Up </Text>
                 </TouchableOpacity>
             </View>
         )
     }
 }
 
-const styles = StyleSheet.create({
+const styles= StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center'
@@ -67,6 +66,8 @@ const styles = StyleSheet.create({
     button: {
         width: '30%',
         backgroundColor: 'salmon',
+        textAlign: 'center',
+        padding: 10,
     },
     text: {
         color: 'black',
