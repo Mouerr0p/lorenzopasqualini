@@ -6,6 +6,7 @@ import Register from './Register';
 import Home from './Home';
 import { auth } from '../firebase/config';
 import Postear from './Postear';
+import Profile from './Profile';
 
 export default class Menu extends Component{
     constructor(props){
@@ -92,6 +93,10 @@ export default class Menu extends Component{
                             <Drawer.Screen name = "Postear">
                                 {props => <Postear {...props}/>}
                             </Drawer.Screen>
+                            <Drawer.Screen name = "Profile">
+                                {props => <Profile {...props}/>}
+                            </Drawer.Screen>
+
                         </>
                         :
                         <>
