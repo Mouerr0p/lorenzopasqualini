@@ -13,6 +13,9 @@ export default class CreatePost extends Component {
             <View style={styles.container}>
                 <Text> Username: {auth.currentUser.displayName} </Text>
                 <Text> E-Mail: {auth.currentUser.email} </Text>
+                <TouchableOpacity style= {styles.button} onPress={()=> this.props.handleLogout()}>
+                    <Text style= {styles.text}> Logout </Text>
+                </TouchableOpacity>
             </View>
         )
     }
@@ -22,5 +25,15 @@ const styles= StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'left'
+    },
+    button: {
+        width: '40%',
+        backgroundColor: 'salmon',
+        textAlign: 'center',
+        padding: 10,
+    },
+    text: {
+        color: 'white',
+        fontSize: 15
     }
 })

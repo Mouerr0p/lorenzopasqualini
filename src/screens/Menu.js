@@ -88,13 +88,13 @@ export default class Menu extends Component{
                         {this.state.loggedIn === true ? 
                         <>
                             <Drawer.Screen name = "Home">
-                                {props => <Home {...props} handleLogout={()=>this.handleLogout()}/>}
+                                {props => <Home {...props}/>}
                             </Drawer.Screen>
                             <Drawer.Screen name = "Postear">
                                 {props => <Postear {...props}/>}
                             </Drawer.Screen>
                             <Drawer.Screen name = "Profile">
-                                {props => <Profile {...props}/>}
+                                {props => <Profile {...props} handleLogout={()=>this.handleLogout()}/>}
                             </Drawer.Screen>
 
                         </>

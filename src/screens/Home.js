@@ -32,9 +32,6 @@ export default class Home extends Component {
         return(
             <View style= {styles.container}>
                 <Text> Home </Text>
-                <TouchableOpacity style= {styles.button} onPress={()=> this.props.handleLogout()}>
-                    <Text style= {styles.text}> Logout </Text>
-                </TouchableOpacity>
                 <FlatList
                 data= {this.state.posts}
                 keyExtractor= {post=> post.id.toString()}
@@ -57,15 +54,5 @@ const styles = StyleSheet.create({
         color: 'black',
         padding: 10,
         marginVertical: 10
-    },
-    button: {
-        width: '40%',
-        backgroundColor: 'salmon',
-        textAlign: 'center',
-        padding: 10,
-    },
-    text: {
-        color: 'white',
-        fontSize: 15
     }
 })
