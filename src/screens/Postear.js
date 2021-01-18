@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
-import { Text, TextInput, TouchableOpacity, View, StyleSheet} from 'react-native';
+import { Text, TextInput, TouchableOpacity, View, StyleSheet, Image, ImageBackground} from 'react-native';
 import { auth, db } from '../firebase/config';
+import MyCamera from '../components/MyCamera';
 
 export default class CreatePost extends Component {
     constructor(props){
         super(props);
         this.state= {
-            comment: ''
+            comment: '',
+            photo: '',
+            showCamera: true
         }
     }
 
@@ -17,7 +20,8 @@ export default class CreatePost extends Component {
             email: auth.currentUser.email,
             createdAt: Date.now(),
             likes: [],
-            comments: []
+            comments: [],
+            photo: this.state.photo
         })
         .then(response=> {
             console.log(response);
@@ -33,23 +37,44 @@ export default class CreatePost extends Component {
             alert('Se produjo un error');
         })
     }
+
+    guardarFoto(url){
+        this.setState({
+            photo: url,
+            showCamera: false,
+        })
+    }
     
     render(){
         return(
+            <>
+            {this.state.showCamera ? 
+            <MyCamera savePhoto = {(url)=>this.guardarFoto(url)}/>
+            :
+            <>
             <View style={styles.container}>
+            <ImageBackground source={require('../../assets/bg.png')} style={styles.image}>
+                <Image
+                    source ={{uri: this.state.photo}}
+                    style = {styles.imagen}
+                />
                 <TextInput
                     style={styles.field}
-                    keyboardType= 'default'
-                    placeholder= 'Publicá tu comentario!'
-                    multiline= {true}
-                    numberOfLines= {4}
-                    onChangeText= {text => this.setState({ comment: text })}
+                    keyboardType='default'
+                    placeholder="Publicá tu comentario"
+                    multiline={true}
+                    numberOfLines = {4}
+                    onChangeText={text => this.setState({ comment: text })}
                     value = {this.state.comment}
                 />
-                <TouchableOpacity style= {styles.button} onPress={()=> this.handlePost()}>
-                    <Text style= {styles.text}> Publicar </Text>
+                <TouchableOpacity style = {styles.button} onPress={() => this.handlePost()}>
+                    <Text style = {styles.text}> Post </Text>
                 </TouchableOpacity>
+            </ImageBackground>
             </View>
+            </>
+            }
+            </>
         )
     }
 }
@@ -59,6 +84,7 @@ const styles= StyleSheet.create({
         flex: 1,
         alignItems: 'center'
     },
+
     field: {
         width: '80%',
         backgroundColor: 'white',
@@ -66,14 +92,28 @@ const styles= StyleSheet.create({
         padding: 10,
         marginVertical: 10
     },
+
     button: {
         width: '40%',
         backgroundColor: 'salmon',
         textAlign: 'center',
         padding: 10,
     },
+
     text: {
         color: 'white',
         fontSize: 20
+    },
+
+    image: {
+        flex: 1,
+        alignItems: 'center',
+        width: '100%',
+        height: '100%'        
+    },
+
+    imagen:{
+        width: '50%',
+        height: '50%'
     }
 })

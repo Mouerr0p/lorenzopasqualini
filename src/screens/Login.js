@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, TextInput, TouchableOpacity, View, StyleSheet} from 'react-native';
+import { Text, TextInput, TouchableOpacity, View, StyleSheet, ImageBackground} from 'react-native';
 import { auth } from '../firebase/config';
 
 export default class Login extends Component {
@@ -15,6 +15,7 @@ export default class Login extends Component {
         console.log(this.state.loggedIn);
         return (
             <View style= {styles.container}>
+                <ImageBackground source={require('../../assets/bg.png')} style={styles.image}>
                 <Text style= {styles.text}> Login </Text>
                 <TextInput
                     style= {styles.field}
@@ -32,6 +33,7 @@ export default class Login extends Component {
                 <TouchableOpacity style= {styles.button} onPress={()=> this.props.handleLogin(this.state.email, this.state.password)}>
                     <Text style= {styles.text}> Login </Text>
                 </TouchableOpacity>
+                </ImageBackground>
             </View>
         )
     }
@@ -42,20 +44,30 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center'
     },
+
     field: {
         width: '80%',
         backgroundColor: 'white',
         padding: 10,
         marginVertical: 10
     },
+
     button: {
         width: '30%',
         backgroundColor: 'salmon',
         textAlign: 'center',
         padding: 10,
     },
+
     text: {
         color: 'white',
         fontSize: 20
-    }
+    },
+
+    image: {
+        flex: 1,
+        alignItems: 'center',
+        width: '100%',
+        height: '100%'        
+    },
 })

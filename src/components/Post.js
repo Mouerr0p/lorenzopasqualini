@@ -77,20 +77,24 @@ export default class Post extends Component{
 
         console.log(this.props.dataItem);
         return(
-            <View stlye={styles.container}>
+            <View style={styles.container}>
+                            <Image 
+            style={styles.preview}
+            source={{uri: this.props.dataItem.data.photo}}
+            />
                 <Text>{this.props.dataItem.data.description}</Text>
                 <Text>{this.props.dataItem.data.createdAt}</Text>
                 <Text>{this.props.dataItem.data.owner}</Text>
-                <Text>Likes: {this.state.likes}</Text>
+                <Text>Liked by {this.state.likes}</Text>
                 {
                     !this.state.liked ?
-                    <TouchableOpacity onPress = {()=> this.onLike()}>
+                    <TouchableOpacity style={styles.like} onPress = {()=> this.onLike()}>
                         <Text>
                             Like
                         </Text>
                     </TouchableOpacity>
                     :
-                    <TouchableOpacity onPress = {()=> this.onDislike()}>
+                    <TouchableOpacity style={styles.unlike} onPress = {()=> this.onDislike()}>
                         <Text>
                             Unlike
                         </Text>
@@ -111,9 +115,8 @@ export default class Post extends Component{
                         style = {styles.modal}
                         >
                             <View style={styles.modalView}>
-                                {/* Botón de cierre del modal */}
                                 <TouchableOpacity style={styles.closeModal} onPress={()=>{this.closeModal()}}>
-                                        <Text style={styles.modalText} >X</Text>
+                                        <Text style={styles.modalText}> X </Text>
                                 </TouchableOpacity>
                                 <Text>
                                     Pondriamos los comments  
@@ -141,12 +144,16 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         padding: 5,
+        width: 750,
+        margin: 25,
+        backgroundColor: 'gainsboro',
+        borderRadius: 4
     },
     
     closeModal:{
         alignSelf: 'flex-end',
         padding: 10,
-        backgroundColor: '#dc3545',
+        backgroundColor: 'salmon',
         marginTop:2,
         marginBotom: 10,
         borderRadius: 4,
@@ -156,11 +163,32 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color:'#fff',
     },
+
     modalView:{
-        backgroundColor: 'green',
-        borderRadius: 10,
+        backgroundColor: 'lightblue',
+        borderRadius: 4,
     },
-    modal: {
+
+    modal:{
         border: 'none',
-    }
+    },
+
+    like:{
+        backgroundColor: 'lightgreen',
+        color: 'white',
+        borderRadius: 4,
+        textAlign: 'center'
+    },
+
+    unlike:{
+        backgroundColor: 'salmon',
+        color: 'white',
+        borderRadius: 4,
+        textAlign: 'center'
+    },
+
+    preview: {
+        width: '100%',
+        height: '100%'
+    },
 })

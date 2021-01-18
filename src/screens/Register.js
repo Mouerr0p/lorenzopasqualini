@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, TextInput, TouchableOpacity, View, StyleSheet} from 'react-native';
+import { Text, TextInput, TouchableOpacity, View, StyleSheet, ImageBackground} from 'react-native';
 import { auth } from '../firebase/config';
 
 export default class Register extends Component {
@@ -24,6 +24,7 @@ export default class Register extends Component {
     render(){
         return (
             <View style= {styles.container}>
+            <ImageBackground source={require('../../assets/bg.png')} style={styles.image}>
                 <Text style= {styles.text}> Registro </Text>
                 <TextInput
                     style= {styles.field}
@@ -47,6 +48,7 @@ export default class Register extends Component {
                 <TouchableOpacity style= {styles.button} onPress={()=> this.handleRegister()}>
                     <Text style= {styles.text}> Sign Up </Text>
                 </TouchableOpacity>
+            </ImageBackground>
             </View>
         )
     }
@@ -57,20 +59,30 @@ const styles= StyleSheet.create({
         flex: 1,
         alignItems: 'center'
     },
+
     field: {
         width: '80%',
         backgroundColor: 'white',
         padding: 10,
         marginVertical: 10
     },
+
     button: {
         width: '30%',
         backgroundColor: 'salmon',
         textAlign: 'center',
         padding: 10,
     },
+
     text: {
         color: 'black',
         fontSize: 20
-    }
+    },
+
+    image: {
+        flex: 1,
+        alignItems: 'center',
+        width: '100%',
+        height: '100%'        
+    },
 })
