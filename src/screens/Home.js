@@ -29,7 +29,7 @@ export default class Home extends Component {
     }
 
     render(){
-        console.log(this.state.posts);
+        console.log(this.props.dataItem);
         return(
             <View style= {styles.container}>
                 <ImageBackground source={require('../../assets/bg.png')} style={styles.bg}>
@@ -38,8 +38,9 @@ export default class Home extends Component {
                     data= {this.state.posts}
                     keyExtractor= {post=> post.id.toString()}
                     renderItem= {({item})=> 
-                        <Post dataItem={item} style={styles.image}></Post>
+                        <Post dataItem={item}></Post>
                     }
+                    style={styles.list}
                 />
                 </ImageBackground>
             </View>
@@ -53,12 +54,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 
-    field: {
-        width: '80%',
-        backgroundColor: 'white',
-        color: 'black',
-        padding: 10,
-        marginVertical: 10
+    list:{
+        width: '50%',
     },
 
     bg:{
@@ -67,11 +64,4 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',      
     },
-
-    image:{
-        width: '50%',
-        height: '50%',
-        borderRadius: 4,
-        backgroundColor: 'green'
-    }
 })

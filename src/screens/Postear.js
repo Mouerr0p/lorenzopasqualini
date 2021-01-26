@@ -53,17 +53,17 @@ export default class CreatePost extends Component {
             :
             <>
             <View style={styles.container}>
-            <ImageBackground source={require('../../assets/bg.png')} style={styles.image}>
+            <ImageBackground source={require('../../assets/bg.png')} style={styles.bg}>
                 <Image
                     source ={{uri: this.state.photo}}
-                    style = {styles.imagen}
+                    style = {styles.preview}
                 />
                 <TextInput
                     style={styles.field}
                     keyboardType='default'
                     placeholder="Publicá tu comentario"
                     multiline={true}
-                    numberOfLines = {4}
+                    numberOfLines = {2}
                     onChangeText={text => this.setState({ comment: text })}
                     value = {this.state.comment}
                 />
@@ -86,11 +86,10 @@ const styles= StyleSheet.create({
     },
 
     field: {
-        width: '80%',
+        width: '50%',
         backgroundColor: 'white',
         color: 'black',
-        padding: 10,
-        marginVertical: 10
+        margin: 10
     },
 
     button: {
@@ -105,15 +104,17 @@ const styles= StyleSheet.create({
         fontSize: 20
     },
 
-    image: {
+    bg: {
         flex: 1,
         alignItems: 'center',
         width: '100%',
         height: '100%'        
     },
 
-    imagen:{
+    preview:{
         width: '50%',
-        height: '50%'
+        height: '50%',
+        margin: 4,
+        borderRadius: 10
     }
 })

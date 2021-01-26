@@ -78,14 +78,14 @@ export default class Post extends Component{
         console.log(this.props.dataItem);
         return(
             <View style={styles.container}>
-                            <Image 
-            style={styles.preview}
-            source={{uri: this.props.dataItem.data.photo}}
-            />
-                <Text>{this.props.dataItem.data.description}</Text>
-                <Text>{this.props.dataItem.data.createdAt}</Text>
-                <Text>{this.props.dataItem.data.owner}</Text>
-                <Text>Liked by {this.state.likes}</Text>
+                <Image 
+                style={styles.preview}
+                source={{uri: this.props.dataItem.data.photo}}
+                />
+                <Text style={styles.desc}>{this.props.dataItem.data.description}</Text>
+                <Text style={styles.desc}>{this.props.dataItem.data.owner}</Text>
+                <Text style={styles.desc}>{this.props.dataItem.data.createdAt}</Text>
+                <Text style={styles.desc}>Liked by {this.state.likes}</Text>
                 {
                     !this.state.liked ?
                     <TouchableOpacity style={styles.like} onPress = {()=> this.onLike()}>
@@ -101,7 +101,7 @@ export default class Post extends Component{
                     </TouchableOpacity>
                 }
                 <TouchableOpacity onPress={()=>{this.showModal()}}>
-                    <Text>
+                    <Text style={styles.desc}>
                         Ver comentarios
                     </Text>
                 </TouchableOpacity>
@@ -116,12 +116,12 @@ export default class Post extends Component{
                         >
                             <View style={styles.modalView}>
                                 <TouchableOpacity style={styles.closeModal} onPress={()=>{this.closeModal()}}>
-                                        <Text style={styles.modalText}> X </Text>
+                                        <Text style={styles.desc}> X </Text>
                                 </TouchableOpacity>
-                                <Text>
+                                <Text style={styles.desc}>
                                     Pondriamos los comments  
                                 </Text>
-                                <Text>
+                                <Text style={styles.desc}>
                                     Posible comment
                                 </Text>
                             </View>
@@ -136,37 +136,31 @@ export default class Post extends Component{
 }
 
 const styles = StyleSheet.create({
-    image: {
-        height: 200,
-    
-    },
     container:{
         flex: 1,
         justifyContent: 'center',
-        padding: 5,
-        width: 750,
-        margin: 25,
-        backgroundColor: 'gainsboro',
-        borderRadius: 4
+        padding: 10,
+        margin: 20,
     },
     
     closeModal:{
         alignSelf: 'flex-end',
         padding: 10,
         backgroundColor: 'salmon',
-        marginTop:2,
+        marginTop: 2,
         marginBotom: 10,
         borderRadius: 4,
     },
 
     modalText:{
         fontWeight: 'bold',
-        color:'#fff',
+        color: 'white',
     },
 
     modalView:{
         backgroundColor: 'lightblue',
         borderRadius: 4,
+        padding: 4,
     },
 
     modal:{
@@ -175,20 +169,24 @@ const styles = StyleSheet.create({
 
     like:{
         backgroundColor: 'lightgreen',
-        color: 'white',
         borderRadius: 4,
-        textAlign: 'center'
+        textAlign: 'center',
     },
 
     unlike:{
         backgroundColor: 'salmon',
-        color: 'white',
         borderRadius: 4,
         textAlign: 'center'
     },
 
     preview: {
         width: '100%',
-        height: '100%'
+        height: 500,
+        borderRadius: 10
     },
+
+    desc:{
+        color: 'white',
+        margin: 4,
+    }
 })
