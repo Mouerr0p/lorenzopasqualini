@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, Image, StyleSheet, TouchableOpacity, Modal } from 'react-native'
 import { auth, db } from '../firebase/config';
 import firebase from 'firebase';
+import Comments from "../components/Comments";
 
 export default class Post extends Component{
 
@@ -56,7 +57,6 @@ export default class Post extends Component{
             })
         })
     }
-
     
     showModal(){
         console.log('Mostrando modal')
@@ -74,18 +74,21 @@ export default class Post extends Component{
     }
     
     render(){
-
         console.log(this.props.dataItem);
         return(
             <View style={styles.container}>
-                <Image 
-                style={styles.preview}
-                source={{uri: this.props.dataItem.data.photo}}
-                />
+                <View style={styles.previewView}>
+                    <Image 
+                    style={styles.preview}
+                    source={{uri: this.props.dataItem.data.photo}}
+                    />
+                </View>
+
                 <Text style={styles.desc}>{this.props.dataItem.data.description}</Text>
-                <Text style={styles.desc}>{this.props.dataItem.data.owner}</Text>
+                <Text style={styles.descUser}>{this.props.dataItem.data.owner}</Text>
                 <Text style={styles.desc}>{this.props.dataItem.data.createdAt}</Text>
                 <Text style={styles.desc}>Liked by {this.state.likes}</Text>
+
                 {
                     !this.state.liked ?
                     <TouchableOpacity style={styles.like} onPress = {()=> this.onLike()}>
@@ -100,6 +103,7 @@ export default class Post extends Component{
                         </Text>
                     </TouchableOpacity>
                 }
+
                 <TouchableOpacity onPress={()=>{this.showModal()}}>
                     <Text style={styles.desc}>
                         Ver comentarios
@@ -107,7 +111,6 @@ export default class Post extends Component{
                 </TouchableOpacity>
                 {
                     this.state.showModal ?
-
                         <Modal 
                         animationType = "fade"
                         transparent = {false}
@@ -118,14 +121,11 @@ export default class Post extends Component{
                                 <TouchableOpacity style={styles.closeModal} onPress={()=>{this.closeModal()}}>
                                         <Text style={styles.desc}> X </Text>
                                 </TouchableOpacity>
-                                <Text style={styles.desc}>
-                                    Pondriamos los comments  
-                                </Text>
-                                <Text style={styles.desc}>
-                                    Posible comment
-                                </Text>
+                                <Comments
+                                comments={this.props.dataItem.data.comments}
+                                postId={this.props.dataItem.id}
+                                />
                             </View>
-
                         </Modal>
                         :
                         null
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         padding: 10,
-        margin: 20,
+        margin: 10,
     },
     
     closeModal:{
@@ -165,28 +165,41 @@ const styles = StyleSheet.create({
 
     modal:{
         border: 'none',
+        width: '100%',
     },
 
     like:{
         backgroundColor: 'lightgreen',
         borderRadius: 4,
         textAlign: 'center',
+        padding: 8,
     },
 
     unlike:{
         backgroundColor: 'salmon',
         borderRadius: 4,
-        textAlign: 'center'
+        textAlign: 'center',
+        padding: 8,
     },
 
+    previewView:{
+        width: '50%',
+    },
+    
     preview: {
         width: '100%',
         height: 500,
-        borderRadius: 10
+        borderRadius: 10,
     },
 
     desc:{
         color: 'white',
         margin: 4,
-    }
+    },
+
+    descUser:{
+        color: 'white',
+        margin: 4,
+        fontWeight: 'bold',
+    },
 })
