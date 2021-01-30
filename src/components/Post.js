@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, Image, StyleSheet, TouchableOpacity, Modal } from 'react-native'
 import { auth, db } from '../firebase/config';
 import firebase from 'firebase';
-import Comments from "../components/Comments";
+import Comments from '../components/Comments';
 
 export default class Post extends Component{
 
@@ -104,6 +104,18 @@ export default class Post extends Component{
                     </TouchableOpacity>
                 }
 
+                {this.props.dataItem.data.owner == auth.currentUser.displayName ? (
+                <TouchableOpacity
+                    onPress={()=>
+                        this.props.deletePost(this.props.dataItem.data.createdAt)
+                    }
+                    style={styles.delete}
+                > Delete?
+                </TouchableOpacity>
+                )
+                : null
+                }
+
                 <TouchableOpacity onPress={()=>{this.showModal()}}>
                     <Text style={styles.desc}>
                         Ver comentarios
@@ -112,7 +124,7 @@ export default class Post extends Component{
                 {
                     this.state.showModal ?
                         <Modal 
-                        animationType = "fade"
+                        animationType = 'fade'
                         transparent = {false}
                         visible = {this.state.showModal}
                         style = {styles.modal}
@@ -201,5 +213,16 @@ const styles = StyleSheet.create({
         color: 'white',
         margin: 4,
         fontWeight: 'bold',
+    },
+
+    delete:{
+        fontFamily: 'Arial',
+        color: 'white',
+        textAlign: 'center',
+        backgroundColor: 'red',
+        borderRadius: 8,
+        margin: 8,
+        padding: 4,
+        width: '10%',
     },
 })

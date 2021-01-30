@@ -12,7 +12,7 @@ export default class Home extends Component {
     }
 
     componentDidMount(){
-        db.collection('posts').orderBy("createdAt", "desc").onSnapshot(
+        db.collection('posts').orderBy('createdAt', 'desc').onSnapshot(
             docs=> {
                 let postsAux= []
                 docs.forEach(doc=> {
@@ -28,6 +28,19 @@ export default class Home extends Component {
         )
     }
 
+    deletePost(param){
+        db.collection('posts')
+          .where('createdAt', '==', param)
+          .get()
+          .then(data=> {
+            data.forEach(doc=> doc.ref.delete());
+            const postsFiltered= this.state.posts.filter(
+              post=> post.createdAt != param
+            );
+            this.setState({ posts: postsFiltered });
+          });
+      }
+
     render(){
         console.log(this.props.dataItem);
         return(
@@ -38,9 +51,11 @@ export default class Home extends Component {
                     data= {this.state.posts}
                     keyExtractor= {post=> post.id.toString()}
                     renderItem= {({item})=> 
-                        <Post dataItem={item}></Post>
+                        <Post
+                        dataItem={item}
+                        deletePost={createdAt=> this.deletePost(createdAt)}
+                        ></Post>
                     }
-                    style={styles.list}
                 />
                 </ImageBackground>
             </View>
@@ -51,16 +66,10 @@ export default class Home extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
-    },
-
-    list:{
-        width: '50%',
+        width: '100%',
     },
 
     bg:{
-        flex: 1,
-        alignItems: 'center',
         width: '100%',
         height: '100%',      
     },
