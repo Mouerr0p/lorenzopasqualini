@@ -32,7 +32,6 @@ export default class Post extends Component{
 
     onLike(){
         const posteoActualizar = db.collection('posts').doc(this.props.dataItem.id)
-        
         posteoActualizar.update({
             likes: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email)
         })
@@ -45,8 +44,7 @@ export default class Post extends Component{
     }
 
     onDislike(){
-        const posteoActualizar = db.collection('posts').doc(this.props.dataItem.id)
-        
+        const posteoActualizar = db.collection('posts').doc(this.props.dataItem.id)      
         posteoActualizar.update({
             likes: firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email)
         })
@@ -59,7 +57,6 @@ export default class Post extends Component{
     }
     
     showModal(){
-        console.log('Mostrando modal')
         this.setState({
             showModal: true,
         })
@@ -67,11 +64,18 @@ export default class Post extends Component{
     
     
     closeModal(){
-        console.log('Cerrando modal')
         this.setState({
             showModal: false,
         })
     }
+
+    formatDate(date) {
+        const fecha= new Date(date),
+        month= (fecha.getMonth() + 1),
+        day= fecha.getDate(),
+        year= fecha.getFullYear();
+        return [day, month, year].join('.');
+      }
     
     render(){
         console.log(this.props.dataItem);
@@ -86,7 +90,7 @@ export default class Post extends Component{
 
                 <Text style={styles.desc}>{this.props.dataItem.data.description}</Text>
                 <Text style={styles.descUser}>{this.props.dataItem.data.owner}</Text>
-                <Text style={styles.desc}>{this.props.dataItem.data.createdAt}</Text>
+                <Text style={styles.desc}>{this.formatDate(this.props.dataItem.data.createdAt)}</Text>
                 <Text style={styles.desc}>Liked by {this.state.likes}</Text>
 
                 {
@@ -110,7 +114,7 @@ export default class Post extends Component{
                         this.props.deletePost(this.props.dataItem.data.createdAt)
                     }
                     style={styles.delete}
-                > Delete?
+                > Delete
                 </TouchableOpacity>
                 )
                 : null
@@ -219,10 +223,10 @@ const styles = StyleSheet.create({
         fontFamily: 'Arial',
         color: 'white',
         textAlign: 'center',
-        backgroundColor: 'red',
-        borderRadius: 8,
-        margin: 8,
+        backgroundColor: 'crimson',
+        borderRadius: 4,
+        margin: 4,
         padding: 4,
-        width: '10%',
+        width: '100%',
     },
 })

@@ -7,6 +7,7 @@ import Home from './Home';
 import { auth } from '../firebase/config';
 import Postear from './Postear';
 import Profile from './Profile';
+import Buscador from "./Buscador";
 
 export default class Menu extends Component{
     constructor(props){
@@ -92,6 +93,9 @@ export default class Menu extends Component{
                             </Drawer.Screen>
                             <Drawer.Screen name = "Postear">
                                 {props => <Postear {...props}/>}
+                            </Drawer.Screen>
+                            <Drawer.Screen name="Search">
+                                {props => <Buscador {...props}/>}
                             </Drawer.Screen>
                             <Drawer.Screen name = "Profile">
                                 {props => <Profile {...props} handleLogout={()=>this.handleLogout()}/>}

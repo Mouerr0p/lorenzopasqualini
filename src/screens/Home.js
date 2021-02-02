@@ -46,7 +46,6 @@ export default class Home extends Component {
         return(
             <View style= {styles.container}>
                 <ImageBackground source={require('../../assets/bg.png')} style={styles.bg}>
-                <Text> Home </Text>
                 <FlatList
                     data= {this.state.posts}
                     keyExtractor= {post=> post.id.toString()}

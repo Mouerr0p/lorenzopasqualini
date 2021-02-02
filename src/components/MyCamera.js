@@ -1,13 +1,13 @@
 import { Camera } from 'expo-camera';
-import React from 'react';
+import React, { Component } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { storage } from '../firebase/config';
 
-export default class MyCamera extends React.Component{
+export default class MyCamera extends Component{
     constructor(props){
         super(props);
         this.camera;
-        this.state = {
+        this.state= {
             photo: '',
             permission: false,
         }
@@ -15,8 +15,7 @@ export default class MyCamera extends React.Component{
 
     componentDidMount(){
         Camera.requestCameraPermissionsAsync()
-        .then(response => {
-            console.log(response)
+        .then(response=> {
             this.setState({
             permission: response.granted
             })
@@ -26,8 +25,7 @@ export default class MyCamera extends React.Component{
     takePicture(){
         if(!this.camera) return;
         this.camera.takePictureAsync()
-        .then(photo => {
-            console.log(photo)
+        .then(photo=> {
             this.setState({
                 photo: photo.uri
             })
@@ -36,15 +34,15 @@ export default class MyCamera extends React.Component{
 
     uploadImage(){
         fetch(this.state.photo)
-        .then(res => {
+        .then(res=> {
             return res.blob();
         })
-        .then(image => {
-            const ref = storage.ref(`camera/${Date.now()}.jpg`)
-            ref.put(image)
+        .then(image=> {
+            const dir= storage.ref(`camera/${Date.now()}.jpg`)
+            dir.put(image)
             .then(()=>{                
-                ref.getDownloadURL()
-                .then(url => {
+                dir.getDownloadURL()
+                .then(url=> {
                     console.log(url);
                     this.setState({
                         photo: ''
@@ -62,36 +60,34 @@ export default class MyCamera extends React.Component{
     }
 
     render(){
-        console.log(this.state)
         return(
-        <View style = {styles.container}>
+        <View style= {styles.container}>
             {
             this.state.photo ?
             <>
             <Image 
-            style={styles.preview}
-            source={{uri: this.state.photo}}
+            style= {styles.preview}
+            source= {{uri: this.state.photo}}
             />
-            <View style={styles.btnContainer}>
-                <TouchableOpacity style={styles.reject} onPress={() => this.onReject()}>
+            <View style= {styles.btnContainer}>
+                <TouchableOpacity style={styles.reject} onPress={()=> this.onReject()}>
                     <Text style={styles.text}>Cancelar</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.accept} onPress={() => this.uploadImage()}>
+                <TouchableOpacity style={styles.accept} onPress={()=> this.uploadImage()}>
                     <Text style={styles.text}>Subir</Text>
                 </TouchableOpacity>
             </View>
             </>
-            :
-            
+            :         
             <Camera
-                style={styles.camera}
-                type={Camera.Constants.Type.front || Camera.Constants.Type.back}
-                ref = {referencia => this.camera = referencia}
+            style={styles.camera}
+            type={Camera.Constants.Type.front || Camera.Constants.Type.back}
+            ref= {ref=> this.camera= ref}
             >
-                <View style={styles.buttonContainer}>
+                <View style= {styles.buttonContainer}>
                     <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => this.takePicture()}>
+                        style= {styles.button}
+                        onPress= {()=> this.takePicture()}>
                     </TouchableOpacity>
                 </View>
             </Camera>
@@ -101,7 +97,7 @@ export default class MyCamera extends React.Component{
     }
 }
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
         flex: 1,
         width: '100%'
